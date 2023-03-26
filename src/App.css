@@ -1,0 +1,132 @@
+#root {
+    background-color: rgba(168, 78, 25, 0.24);
+    --color-text: rgba(170, 80, 15, 0.9);
+    --color-bg: rgba(204, 100, 35, 0.425);
+    --color-bg-light: rgba(204, 100, 35, 0.2);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+    --red: rgb(255, 0, 0);
+    --yellow: rgb(250, 255, 0);
+    --green: rgb(30, 255, 0);
+    --blue: rgb(30, 0, 255);
+}
+
+.game, .title, .gameBoard, .decodingBoard, .pinBoard, .playerInput,
+.colorInput, .submitInput, .side1, .side2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.game {
+    height: 100vh;
+    width: 100vw;
+}
+
+.board {
+    height: 100vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    gap: 15px;
+}
+
+.title, .gameOver, .timer {
+    font-size: xxx-large;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 900;
+}
+
+.gameBoard, .playerInput {
+    border: solid 10px;
+    border-radius: 30px;
+    border-color: var(--color-text);
+    background-color: var(--color-bg);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.7);
+}
+
+.decodingBoard, .pinBoard { height: 60vh; }
+
+.colorInput {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 130px; 
+}
+
+.colorInputForm {
+    width: 40vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.decodingBoard {
+    width: 35vw; 
+    border-right: solid 10px;
+    border-color: var(--color-text);}
+
+.pinBoard { width: 10vw; }
+
+.colorBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 35vw;
+    height: 55vh;
+    gap: 0.6vh;
+}
+
+.colorRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 35vw;
+}
+
+.colorCircle {
+    border: none;
+    border-radius: 50%;
+    width: 3vw;
+    height: 5vh;
+    box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.8);
+}
+
+.White { background-color: var(--white); }
+.Black { background-color: var(--black); }
+.Red { background-color: var(--red); }
+.Yellow { background-color: var(--yellow); }
+.Green { background-color: var(--green); }
+.Blue { background-color: var(--blue); }
+
+.gameOver, .timer {
+    font-size: x-large;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+button {
+    width: 80px;
+    height: 40px;
+    font-size: medium;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-clip: padding-box;
+    transition: all 0.15s;
+}
+button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.6);
+    color: rgb(255, 200, 170);
+    background-color: var(--color-text);
+}
+
+.submit {
+    height: 60px;
+    width: 100px;
+}
