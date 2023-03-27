@@ -11,9 +11,10 @@
     --blue: rgb(87, 65, 255);
 }
 
-p { color: var(--color-text); }
+p, .title { color: var(--color-text); }
+.title { margin-top: 2vh; }
 
-.game, .title, .gameBoard, .decodingBoard, .pinBoard, .playerInput, .submitInput {
+.game, .title, .gameBoard, .decodingBoard, .pinRow, .playerInput, .submitInput {
     display: flex;
     align-items: center;
     justify-content: space-around;
@@ -23,6 +24,39 @@ p { color: var(--color-text); }
 .game {
     height: 100vh;
     width: 100vw;
+    justify-content: space-evenly;
+}
+
+.pinBoard {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 2vh;
+    margin-right: 0.5vw;
+    height: 57vh;
+    gap: 0.6vh;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.pinRow {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 5vh;
+    width: 10vw;
+    gap: 2vw;
+}
+
+.correct, .misplaced {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.misplacedText, .correctText {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-weight: bold;
 }
 
 .board {
@@ -31,7 +65,7 @@ p { color: var(--color-text); }
     display: flex;
     flex-direction: column;
     align-content: flex-start;
-    gap: 15px;
+    gap: 5vh;
 }
 
 .title, .gameOver, .timer {
@@ -87,7 +121,7 @@ option#White, option#Red, option#Blue, option#Black, option#Yellow, option#Green
 .Green, option#Green { background-color: var(--green); color: var(--green);}
 .Blue, option#Blue { background-color: var(--blue); color: var(--blue);}
 
-.decodingBoard, .pinBoard { height: 60vh; }
+.decodingBoard { height: 60vh; }
 
 .colorInputForm {
     width: 40vw;
@@ -123,15 +157,14 @@ option#White, option#Red, option#Blue, option#Black, option#Yellow, option#Green
 .colorCircle {
     border: none;
     border-radius: 50%;
-    width: 3vw;
+    width: 2.5vw;
     height: 5vh;
     box-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.8);
 }
 
 button {
-    width: 80px;
-    height: 40px;
-    font-size: medium;
+    height: 7vh;
+    width: 6vw;
     font-weight: bold;
     border: none;
     border-radius: 50px;
@@ -139,6 +172,7 @@ button {
     background-color: var(--color-bg);
     background-clip: padding-box;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: x-large;
     transition: all 0.15s;
     cursor: pointer;
 }
@@ -149,7 +183,8 @@ button:hover {
 }
 
 .submit {
+    font-size: medium;
     height: 5vh;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     width: 6vw;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
