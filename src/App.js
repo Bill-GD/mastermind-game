@@ -1,9 +1,7 @@
 import { useState } from 'react';
-
 import './App.css';
 
 const colorDefault = ['White', 'Black', 'Red', 'Yellow', 'Green', 'Blue'];
-// let guessHistory = [];
 let chosenColors = [];
 const getPattern = () => {
   chosenColors = [];
@@ -60,7 +58,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess }) 
     const formJson = Object.fromEntries(formData.entries());
     let array = [];
     for (let i = 1; i < 5; i++) {
-      if (formJson[`color${i}`] === '') return;
+      if (formJson[`color${i}`] === '' || !formJson[`color${i}`]) return;
       array = [...array, formJson[`color${i}`]];
     }
     setGuessHistory([...guessHistory, array]);
@@ -77,23 +75,24 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess }) 
     setCurrentGuess(array);
   }
 
+  const renderSelects = () => {
+    let array = [];
+    for (let i = 1; i <= 4; i++)
+      array.push(
+        <select className='colorSelect' name={`color${i}`} key={`color-${i}`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
+          <option disabled selected hidden>Color</option>
+          {colorDefault.map(e => (<option id={e} value={e}>{e}</option>))}
+        </select>
+      );
+    return array;
+  }
+
   return (
     <form className='colorInputForm' onSubmit={handleInputForm} method='post' >
-      <select className='colorSelect' name='color1' key={`color-1`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
-        {colorDefault.map(e => (<option value={e}>{e}</option>))}
-      </select>
-      <select className='colorSelect' name='color2' key={`color-2`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
-        {colorDefault.map(e => (<option value={e}>{e}</option>))}
-      </select>
-      <select className='colorSelect' name='color3' key={`color-3`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
-        {colorDefault.map(e => (<option value={e}>{e}</option>))}
-      </select>
-      <select className='colorSelect' name='color4' key={`color-4`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
-        {colorDefault.map(e => (<option value={e}>{e}</option>))}
-      </select>
+      {renderSelects()}
       <button className='submit' type='submit'>Submit</button>
     </form >
-  )
+  );
 }
 
 const PlayerInput = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess }) => {
@@ -120,10 +119,22 @@ const Board = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess })
 }
 
 let gameOver = true;
+let timeStart = 0;
 
-const Game = ({ colorList }) => {
+const convertTime = (time) => {
+  let timeString = '';
+  const hour = Math.round(time / 3.6e6); time -= (3.6e6 * hour);
+  const minute = Math.trunc(time / 6e4); time -= (6e4 * minute);
+  const second = Math.trunc(time / 1e3);
+  timeString += (hour < 10 ? ('0' + hour) : hour) + ':'
+    + (minute < 10 ? ('0' + minute) : minute) + ':'
+    + (second < 10 ? ('0' + second) : second);
+  return timeString;
+}
+
+const Game = () => {
   // state of component only change if <setState> function is used
-  const [currentGuess, setCurrentGuess] = useState(Array(4).fill('White'));
+  const [currentGuess, setCurrentGuess] = useState(Array(4).fill(null));
   const [guessHistory, setGuessHistory] = useState([]);
 
   const buttonRestart_Click = () => {
@@ -131,19 +142,27 @@ const Game = ({ colorList }) => {
     setGuessHistory([]);
     setCurrentGuess(Array(4).fill('White'));
     // gameOver = !gameOver;
+    const buttonRestart = document.getElementsByClassName('buttonRestart')[0];
+    if (buttonRestart.innerHTML === 'New Game' || timeStart === 0)
+      timeStart = Date.now();
+    else {
+      document.getElementById('timeDisplay').innerHTML = convertTime(Date.now() - timeStart);
+      timeStart = Date.now();
+    }
+      buttonRestart.innerHTML = 'Restart';
     for (let element of document.getElementsByClassName('colorSelect'))
-      element.value = 'White';
+      element.value = 'Color';
+
   };
 
   return (
     <div className='game'>
       <div className='gameOver'>
         {gameOver ?
-          (
-            <>
+          (<>
               <p>Game Over</p>
               <button className='buttonRestart' onClick={buttonRestart_Click}>
-                Restart
+                New Game
               </button>
             </>)
           : (<></>)
@@ -152,7 +171,7 @@ const Game = ({ colorList }) => {
       <Board guessHistory={guessHistory} setGuessHistory={setGuessHistory} currentGuess={currentGuess} setCurrentGuess={setCurrentGuess} />
       <div className='timer'>
         {gameOver ?
-          (<><p>Time: 00:12:43</p></>)
+          (<><p>Time:</p><p id='timeDisplay'>00:00:00</p></>)
           : (<></>)
         }
       </div>
@@ -160,10 +179,5 @@ const Game = ({ colorList }) => {
   );
 }
 
-export default function App() {
-  return (
-    <div className="App">
-      <Game />
-    </div>
-  );
-}
+const App = () => (<div className="App"> <Game /> </div>);
+export default App;
