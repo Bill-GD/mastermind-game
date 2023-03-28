@@ -14,7 +14,7 @@ let timeStart = 0;
 const Title = () => (<div className='title'> MASTERMIND GAME </div>);
 
 const ColorCircle = ({ color }) => (
-  <div className={`colorCircle ${color}`} title={`${!color ? (randomText[Math.trunc(Math.random() * randomText.length)]) : color}`} ></div>
+  <div className={`colorCircle ${color}`} title={`${!color ? (randomText[Math.trunc(Math.random() * randomText.length)]) : (color + '?')}`} ></div>
 );
 
 const ColorRows = ({ guessHistory }) => (
