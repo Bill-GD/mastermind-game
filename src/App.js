@@ -76,12 +76,6 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
   const handleInputForm = (e) => {
     e.preventDefault();
     if (gameOver) return;
-    if (guessHistory.length >= 9) {
-      setGameOver(true);
-      document.getElementById('timeDisplay').innerHTML = convertTime(Date.now() - timeStart);
-      timeStart = 0;
-      return;
-    }
     if (timeStart === 0) {
       alert('Start a new game first');
       return;
@@ -108,6 +102,12 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
 
     setGuessHistory([...guessHistory, array]);
     if (correct === 4) {
+      setGameOver(true);
+      document.getElementById('timeDisplay').innerHTML = convertTime(Date.now() - timeStart);
+      timeStart = 0;
+      return;
+    }
+    if (guessHistory.length >= 9) {
       setGameOver(true);
       document.getElementById('timeDisplay').innerHTML = convertTime(Date.now() - timeStart);
       timeStart = 0;
