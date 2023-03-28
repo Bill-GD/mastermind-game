@@ -12,13 +12,15 @@ let timeStart = 0;
 
 const Title = () => (<div className='title'> MASTERMIND GAME </div>);
 
+const ColorCircle = ({ color }) => (
+  <div className={`colorCircle ${color}`} title={`${!color ? 'What' : color}?`} ></div>
+);
+
 const ColorRows = ({ guessHistory }) => (
   <div className='colorBoard'>
     {guessHistory.map((colors, move) => (
       <div className='colorRow' key={`row-${move}`}>
-        {colors.map((color) => (
-          <div className={`colorCircle ${color}`} ></div>
-        ))}
+        {colors.map((color) => <ColorCircle color={color} />)}
       </div>
     ))}
   </div>
@@ -127,7 +129,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
     let array = [];
     for (let i = 1; i <= 4; i++)
       array.push(
-        <select className='colorSelect' name={`color${i}`} key={`color-${i}`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
+        <select className='colorSelect' title={`Select Color ${i}`} name={`color${i}`} key={`color-${i}`} onChange={e => handleInputChange(e.target.value, e.target.name)} >
           <option disabled selected hidden>Color</option>
           {colorDefault.map(e => (<option id={e} value={e}>{e}</option>))}
         </select>
@@ -146,9 +148,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
 const PlayerInput = ({ guessHistory, setGuessHistory, currentGuess, checkColorHistory, setCurrentGuess, setCheckColorHistory, gameOver, setGameOver }) => (
   <div className='playerInput'>
     <div className='colorRow'>
-      {currentGuess.map((color) => (
-        <div className={`colorCircle ${color}`} ></div>
-      ))}
+      {currentGuess.map((color) => <ColorCircle color={color} />)}
     </div>
     <Form guessHistory={guessHistory} setGuessHistory={setGuessHistory} currentGuess={currentGuess} setCurrentGuess={setCurrentGuess} checkColorHistory={checkColorHistory} setCheckColorHistory={setCheckColorHistory} gameOver={gameOver} setGameOver={setGameOver} />
   </div>
@@ -209,20 +209,21 @@ const Game = () => {
             <div className='pattern'>
               <p>Pattern</p>
               <div className='colorPattern'>
-                {chosenColors.map((color) => (
-                  <div className={`colorCircle ${color}`} ></div>
-                ))}
+                {chosenColors.map((color) => <ColorCircle color={color} />)}
               </div>
             </div>
-            {checkColorHistory[checkColorHistory.length - 1][0] === 4 ? (<p>You Won</p>) : guessHistory.length >= 10 ? (<p>You Lose</p>) : (<p>Other</p>)}
+            {checkColorHistory[checkColorHistory.length - 1][0] === 4 ? (<p>You Won</p>) : guessHistory.length >= 9 ? (<p>You Lose</p>) : (<p>Other</p>)}
           </>
         ) : (<></>)}
         <button className='buttonRestart' onClick={buttonRestart_Click}>
           New Game
         </button>
+        <a className='howToPlay' href='https://www.wikihow.com/Play-Mastermind' rel='noreferrer' target='_blank'>
+          How To Play
+        </a>
       </div>
       <Board guessHistory={guessHistory} setGuessHistory={setGuessHistory} currentGuess={currentGuess} setCurrentGuess={setCurrentGuess} checkColorHistory={checkColorHistory} setCheckColorHistory={setCheckColorHistory} gameOver={gameOver} setGameOver={setGameOver} />
-      <div className='timer'>
+      <div className='timer' title='How slow you are at solving it'>
         <p>Time:</p>
         <p id='timeDisplay'>00:00:00.000</p>
       </div>

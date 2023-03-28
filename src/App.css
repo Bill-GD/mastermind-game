@@ -72,12 +72,16 @@ p, .title { color: var(--color-text); }
     font-size: xxx-large;
     font-weight: 900;
 }
-
 .gameOver, .timer, #timeDisplay, .pattern {
     font-size: x-large;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+.timer { width: 11vw; }
+.gameOver {
+    gap: 1vh;
+    width: 11vw;
 }
 
 .gameBoard, .playerInput {
@@ -185,6 +189,7 @@ button {
 button:hover {
     transform: translateY(-5px);
     box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.6);
+    background-color: var(--color-text);
     color: rgb(255, 200, 170);
 }
 
@@ -193,4 +198,28 @@ button:hover {
     height: 5vh;
     width: 6vw;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.howToPlay {
+    height: 4vh;
+    width: 6vw;
+    font-weight: bold;
+    border: none;
+    border-radius: 50px;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    background-clip: padding-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: large;
+    transition: all 0.15s;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    padding-top: 20px;
+}
+.howToPlay:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.4rem 0.6rem rgba(0, 0, 0, 0.6);
+    background-color: var(--color-text);
+    color: rgb(255, 200, 170);
 }
