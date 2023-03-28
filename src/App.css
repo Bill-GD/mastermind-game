@@ -73,7 +73,7 @@ p, .title { color: var(--color-text); }
     font-weight: 900;
 }
 
-.gameOver, .timer, #timeDisplay {
+.gameOver, .timer, #timeDisplay, .pattern {
     font-size: x-large;
     display: flex;
     flex-direction: column;
@@ -147,11 +147,17 @@ option#White, option#Red, option#Blue, option#Black, option#Yellow, option#Green
     gap: 0.6vh;
 }
 
-.colorRow {
+.colorRow, .colorPattern {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     width: 35vw;
+}
+.colorPattern {
+    justify-content: center;
+    width: 11vw;
+    height: 5vh;
+    gap: 0.5vw;
 }
 
 .colorCircle {

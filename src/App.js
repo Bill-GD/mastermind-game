@@ -54,10 +54,17 @@ const GameBoard = ({ guessHistory, checkColorHistory }) => (
   </div>
 );
 
-const checkOtherColors = (pattern, color, index) => {
-  for (let i = 0; i < pattern.length; i++) {
-    if (i === index) continue;
-    if (color.toLowerCase() === pattern[i].toLowerCase())
+const checkMisplaced = (pattern, current, index) => {
+  let notCorrectArray = [];
+  for (let i = 0; i < pattern.length; i++)
+    current[i] === pattern[i] ?
+      notCorrectArray[i] = null :
+      notCorrectArray[i] = pattern[i];
+
+  let color = current[index];
+  for (let i = 0; i < notCorrectArray.length; i++) {
+    if (!notCorrectArray[i]) continue;
+    if (color === pattern[i])
       return true;
   }
   return false;
@@ -67,8 +74,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
   const handleInputForm = (e) => {
     e.preventDefault();
     if (gameOver) return;
-    if (guessHistory.length >= 10) {
-      alert('You Lose');
+    if (guessHistory.length >= 9) {
       setGameOver(true);
       document.getElementById('timeDisplay').innerHTML = convertTime(Date.now() - timeStart);
       timeStart = 0;
@@ -81,7 +87,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
     const form = e.target;
     const formData = new FormData(form);
     const formJson = Object.fromEntries(formData.entries());
-    let array = [];
+    let array = []; // current guess
     for (let i = 1; i < 5; i++) {
       if (formJson[`color${i}`] === '' || !formJson[`color${i}`]) return;
       array = [...array, formJson[`color${i}`]];
@@ -90,7 +96,7 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
     for (let i = 0; i < array.length; i++) {
       if (array[i] === chosenColors[i])
         correct++;
-      else if (checkOtherColors(chosenColors, array[i], i))
+      else if (checkMisplaced(chosenColors, array, i))
         misplaced++;
     }
 
@@ -198,7 +204,19 @@ const Game = () => {
   return (
     <div className='game'>
       <div className='gameOver'>
-        {gameOver ? (<p>Game Over</p>) : (<></>)}
+        {gameOver ? (
+          <>
+            <div className='pattern'>
+              <p>Pattern</p>
+              <div className='colorPattern'>
+                {chosenColors.map((color) => (
+                  <div className={`colorCircle ${color}`} ></div>
+                ))}
+              </div>
+            </div>
+            {checkColorHistory[checkColorHistory.length - 1][0] === 4 ? (<p>You Won</p>) : guessHistory.length >= 10 ? (<p>You Lose</p>) : (<p>Other</p>)}
+          </>
+        ) : (<></>)}
         <button className='buttonRestart' onClick={buttonRestart_Click}>
           New Game
         </button>
