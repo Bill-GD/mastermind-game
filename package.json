@@ -1,6 +1,6 @@
 {
   "name": "mastermind-game",
-  "version": "0.1.0.1",
+  "version": "0.1.01",
   "private": true,
   "homepage": "https://bill-gd.github.io/mastermind-game/",
   "dependencies": {
