@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.80b1ec00.css",
-    "main.js": "/static/js/main.dd0ab525.js",
-    "static/js/787.a9e38627.chunk.js": "/static/js/787.a9e38627.chunk.js",
-    "index.html": "/index.html",
-    "main.80b1ec00.css.map": "/static/css/main.80b1ec00.css.map",
-    "main.dd0ab525.js.map": "/static/js/main.dd0ab525.js.map",
-    "787.a9e38627.chunk.js.map": "/static/js/787.a9e38627.chunk.js.map"
+    "main.css": "/mastermind-game/static/css/main.80b1ec00.css",
+    "main.js": "/mastermind-game/static/js/main.5fe15405.js",
+    "static/js/787.a9e38627.chunk.js": "/mastermind-game/static/js/787.a9e38627.chunk.js",
+    "index.html": "/mastermind-game/index.html",
+    "main.80b1ec00.css.map": "/mastermind-game/static/css/main.80b1ec00.css.map",
+    "main.5fe15405.js.map": "/mastermind-game/static/js/main.5fe15405.js.map",
+    "787.a9e38627.chunk.js.map": "/mastermind-game/static/js/787.a9e38627.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.80b1ec00.css",
-    "static/js/main.dd0ab525.js"
+    "static/js/main.5fe15405.js"
   ]
 }
