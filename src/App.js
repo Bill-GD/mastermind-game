@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './App.css';
 
-const randomText = ['What?', 'Huh?', 'Um...', 'Color??', 'This is...?', '¯\\_(ツ)_/¯', 'idk', 'Error', '? (ಠ_ಠ) ?']
 const colorDefault = ['White', 'Black', 'Red', 'Yellow', 'Green', 'Blue'];
 let chosenColors = [];
 const getPattern = () => {
@@ -14,7 +13,7 @@ let timeStart = 0;
 const Title = () => (<div className='title'> MASTERMIND GAME </div>);
 
 const ColorCircle = ({ color }) => (
-  <div className={`colorCircle ${color}`} title={`${!color ? (randomText[Math.trunc(Math.random() * randomText.length)]) : (color + '?')}`} ></div>
+  <div className={`colorCircle ${color}`} title={`${!color ? (getRandom()) : (color + '?')}`} ></div>
 );
 
 const ColorRows = ({ guessHistory }) => (
@@ -178,7 +177,7 @@ const Board = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, c
 
 const convertTime = (time) => {
   let timeString = '';
-  const hour = Math.round(time / 3.6e6); time -= (3.6e6 * hour);
+  const hour = Math.trunc(time / 3.6e6); time -= (3.6e6 * hour);
   const minute = Math.trunc(time / 6e4); time -= (6e4 * minute);
   const second = Math.trunc(time / 1e3); time -= (1e3 * second);
   timeString += (hour < 10 ? ('0' + hour) : hour) + ':'
@@ -245,3 +244,11 @@ const Game = () => {
 
 const App = () => (<div className="App"> <Game /> </div>);
 export default App;
+
+const randomText = ['What?', 'Huh?', 'Um...', 'Color??', 'This is...?', '¯\\_(ツ)_/¯', 'idk', 'Error', '? (ಠ_ಠ) ?', 'Hmm?'];
+const getRandom = () =>
+  Math.random() > 0.1 ?
+    randomText[Math.trunc(Math.random() * randomText.length)] :
+    (String.fromCharCode(Math.trunc(Math.random() * 128)) +
+      String.fromCharCode(Math.trunc(Math.random() * 128)) +
+      String.fromCharCode(Math.trunc(Math.random() * 128)))
