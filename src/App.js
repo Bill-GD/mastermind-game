@@ -1,19 +1,20 @@
 import { useState } from 'react';
 import './App.css';
 
+const randomText = ['What?', 'Huh?', 'Um...', 'Color??', 'This is...?', '¯\\_(ツ)_/¯', 'idk', 'Error', '? (ಠ_ಠ) ?']
 const colorDefault = ['White', 'Black', 'Red', 'Yellow', 'Green', 'Blue'];
 let chosenColors = [];
 const getPattern = () => {
   chosenColors = [];
   for (let i = 0; i < 4; i++)
-    chosenColors.push(colorDefault[Math.trunc(Math.random() * 6)]);
+    chosenColors.push(colorDefault[Math.trunc(Math.random() * colorDefault.length)]);
 };
 let timeStart = 0;
 
 const Title = () => (<div className='title'> MASTERMIND GAME </div>);
 
 const ColorCircle = ({ color }) => (
-  <div className={`colorCircle ${color}`} title={`${!color ? 'What' : color}?`} ></div>
+  <div className={`colorCircle ${color}`} title={`${!color ? (randomText[Math.trunc(Math.random() * randomText.length)]) : color}`} ></div>
 );
 
 const ColorRows = ({ guessHistory }) => (
@@ -56,20 +57,33 @@ const GameBoard = ({ guessHistory, checkColorHistory }) => (
   </div>
 );
 
-const checkMisplaced = (pattern, current, index) => {
+
+// TODO check number of a color
+const checkMisplaced = (pattern, current) => {
+  let patternColorCount = {};
+  pattern.forEach(element =>
+    !patternColorCount[element] ?
+      patternColorCount[element] = 1 :
+      patternColorCount[element]++
+  );
+
   let notCorrectArray = [];
   for (let i = 0; i < pattern.length; i++)
     current[i] === pattern[i] ?
       notCorrectArray[i] = null :
       notCorrectArray[i] = pattern[i];
 
-  let color = current[index];
+  let misplaced = 0;
   for (let i = 0; i < notCorrectArray.length; i++) {
     if (!notCorrectArray[i]) continue;
-    if (color === pattern[i])
-      return true;
+    for (let j = 0; j < notCorrectArray.length; j++)
+      if (current[i] === notCorrectArray[j]) {
+        patternColorCount[current[i]]--;
+        misplaced++;
+        break;
+      }
   }
-  return false;
+  return misplaced;
 }
 
 const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, checkColorHistory, setCheckColorHistory, gameOver, setGameOver }) => {
@@ -89,12 +103,10 @@ const Form = ({ guessHistory, setGuessHistory, currentGuess, setCurrentGuess, ch
       array = [...array, formJson[`color${i}`]];
     }
     let correct = 0, misplaced = 0;
-    for (let i = 0; i < array.length; i++) {
+    for (let i = 0; i < array.length; i++)
       if (array[i] === chosenColors[i])
         correct++;
-      else if (checkMisplaced(chosenColors, array, i))
-        misplaced++;
-    }
+    misplaced = checkMisplaced(chosenColors, array);
 
     checkColorHistory[0][0] === -1 ?
       setCheckColorHistory([[correct, misplaced]]) :
